@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0px;
+            padding: 0px;
+        }
+        #random-color{
+            height: 200px;
+            width: 200px;
+            border-radius: 5%;
+        }#container{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            height: 500px;
+        }
+        #random-color-container{
+            display: flex;
+            justify-content: center;
+        }
+        #options-container{
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        h1{
+            text-align: center;
+        }
+        h2{
+            text-align: right;
+            font-weight: bold;
+        }
+        button {
+            background-color: #dadada;
+            padding: 20px;
+            max-width: 200px;
+            text-align: center;
+            border-radius: 8%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Guess the color</h1>
+    <h2 id="score">Score: 0</h2>
+    <div id="container">
+        <div id="random-color-container">
+            <div id="random-color"></div>
+        </div>
+        <div id="options-container">
+            <button id="a-option"></button>
+            <button id="b-option"></button>
+            <button id="c-option"></button>
+            <button id="d-option"></button>
+        </div>
+    </div>
+    <script>
+        let score = 0;
+        document.getElementById("score").innerText = "Score: "+score;
+        const optionsArray = ["a-option", "b-option", "c-option", "d-option"];
+        let answerOption;
+        const randomColorBox = document.getElementById("random-color");
+        function randomNumberGenerator(max){
+            return Math.floor(Math.random() * (max + 1));
+        }
+        document.getElementById("options-container").addEventListener("click", (e) => {
+            if(e.target.id === answerOption){
+                score++;
+                document.getElementById("score").innerText = "Score: "+score;
+                startGame();
+            } else {
+                location.reload();
+            }
+        });
+        function startGame(){
+            answerOption = optionsArray[randomNumberGenerator(3)];
+            for(let i = 0; i < optionsArray.length; i++){
+                if(optionsArray[i] === answerOption){
+                    let ans = "rgb("+randomNumberGenerator(255)+", "+randomNumberGenerator(255)+", "+randomNumberGenerator(255)+")";
+                    document.getElementById(optionsArray[i]).innerText = ans;
+                    randomColorBox.style.backgroundColor = ans;
+                    console.log(ans);
+                } else {
+                    document.getElementById(optionsArray[i]).innerText = "rgb("+randomNumberGenerator(255)+", "+randomNumberGenerator(255)+", "+randomNumberGenerator(255)+")";
+                }
+            }         
+        }
+        startGame();
+    </script>
+</body>
+</html>
